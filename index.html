@@ -7,7 +7,7 @@
 <meta property="og:type"         content="website">
 <meta property="og:url"          content="https://fsc-git.github.io/RD-QEvent-08/">
 <meta property="og:title"        content="비상장주식 평가, 나는 얼마나 알고 있을까?">
-<meta property="og:description"  content="간단한 O/X 5문항으로 확인해보세요. 전 문항 정답 시 특별한 기회를 드립니다!">
+<meta property="og:description"  content="간단한 O/X 4문항으로 확인해보세요. 전 문항 정답 시 특별한 기회를 드립니다!">
 <meta property="og:image"        content="https://fsc-git.github.io/RD-QEvent-08/thumbnail.png?v=5">
 <meta property="og:image:width"  content="1200">
 <meta property="og:image:height" content="630">
@@ -442,12 +442,12 @@
     <!-- SCREEN 1: INTRO -->
     <section class="screen active" id="screen-intro">
       <h1 class="title">비상장주식 평가,<br><span class="accent">나는 얼마나 알고 있을까?</span></h1>
-      <p class="subtitle">간단한 O/X 5문항으로 확인해보세요.<br><b>전 문항을 맞추시면 특별한 선물의 기회를 드립니다!</b></p>
+      <p class="subtitle">간단한 O/X 4문항으로 확인해보세요.<br><b>전 문항을 맞추시면 특별한 선물의 기회를 드립니다!</b></p>
 
       <div class="rules">
         <div class="rules-head">이벤트 안내</div>
         <ul>
-          <li>총 <b>5문항</b>이 출제됩니다.</li>
+          <li>총 <b>4문항</b>이 출제됩니다.</li>
           <li><b>전 문항 정답</b>을 맞힌 참가자 중 <b>추첨을 통해 3명</b>에게 무료 수강 자격을 드립니다.</li>
           <li>문항을 풀어가는 과정에서 강의에서 다루는 핵심 내용을 미리 경험하실 수 있습니다.</li>
         </ul>
@@ -464,7 +464,7 @@
     <!-- SCREEN 2: QUIZ -->
     <section class="screen" id="screen-quiz">
       <div class="quiz-head">
-        <span class="quiz-tag" id="quiz-tag">문항 1 / 5</span>
+        <span class="quiz-tag" id="quiz-tag">문항 1 / 4</span>
         <span class="quiz-score" id="quiz-score">정답 0개</span>
       </div>
       <div class="progress-track" id="progress-track"></div>
@@ -500,7 +500,7 @@
         <p class="desc">아래 <b>참가 코드</b>를 신청 폼에 입력하면 응모가 완료됩니다.<br>전 문항 정답자 중 <b>추첨을 통해 3명</b>에게 무료 수강 자격이 부여됩니다.</p>
 
         <div class="rank-box">
-          <div class="rank-row"><span>응시 결과</span><b id="pass-score">5 / 5</b></div>
+          <div class="rank-row"><span>응시 결과</span><b id="pass-score">4 / 4</b></div>
           <div class="rank-row"><span>참가 코드</span><b id="entry-code" class="entry-code" title="클릭하면 복사됩니다">발급 중…</b></div>
           <div class="rank-row"><span>추첨 안내</span><b>강의 신청 후 결과 개별 연락</b></div>
         </div>
@@ -525,7 +525,7 @@
         <p class="desc" id="partial-msg">기본 개념은 충분합니다.</p>
 
         <div class="rank-box">
-          <div class="rank-row"><span>정답</span><b id="partial-score">0 / 5</b></div>
+          <div class="rank-row"><span>정답</span><b id="partial-score">0 / 4</b></div>
           <div class="rank-row"><span>오답</span><b id="partial-wrong">0개</b></div>
         </div>
 
@@ -575,57 +575,47 @@
   //  right = 정답 선택 시 해설, wrong = 오답 선택 시 해설
   const QUIZ = [
     {
-      q: "비상장주식 평가는 가업승계와 증여 시 중요한 기준이 된다.",
-      a: "1x19jhb",   // 정답: O
-      right: "가업승계나 증여 과정에서는 주식의 가액이 세금 산정의 중요한 기준이 됩니다. 따라서 비상장주식의 가치를 미리 파악하는 것이 승계 전략의 출발점입니다.",
-      wrong: "비상장주식 평가는 가업승계와 증여 시 매우 중요한 기준입니다. 주식가치에 따라 증여세와 상속세 부담이 달라질 수 있기 때문에 사전 검토가 필요합니다."
-    },
-    {
-      q: "순자산만 알면 비상장주식 평가를 할 수 있다.",
-      a: "dhamzn",    // 정답: X
-      right: "비상장주식 평가는 순자산만으로 결정되지 않습니다. 일반적으로 순손익가치와 순자산가치 등 여러 요소를 함께 검토해야 합니다.",
-      wrong: "순자산만으로는 정확한 비상장주식 평가가 어렵습니다. 기업의 수익성과 자산가치 등 다양한 요소를 함께 고려해야 합니다."
-    },
-    {
-      q: "비상장주식 평가는 세무사만 알면 되는 업무다.",
-      a: "1kcv6li",   // 정답: X
+      q: "비상장주식 평가는 세무사만 할 수 있는 업무다.",
+      a: "jk1woc",    // 정답: X
       right: "비상장주식 평가는 세무사뿐 아니라 법인 상담을 하는 전문직도 이해해야 하는 영역입니다. 가업승계, 지분 정리, 증여 상담 등 다양한 상황에서 활용되기 때문입니다.",
       wrong: "비상장주식 평가는 세무사만의 업무로 보기 어렵습니다. 법인 컨설팅을 하는 전문직이라면 상담의 흐름과 핵심 기준을 이해할 필요가 있습니다."
     },
     {
       q: "같은 기업이라도 평가기준일이 달라지면 주식가치가 달라질 수 있다.",
-      a: "1p4w4he",   // 정답: O
+      a: "1al1p7k",   // 정답: O
       right: "평가기준일이 달라지면 적용되는 재무정보와 기업 상황도 달라질 수 있습니다. 따라서 같은 기업이라도 평가 시점에 따라 주식가치가 달라질 수 있습니다.",
       wrong: "같은 기업이라도 평가 시점이 달라지면 주식가치가 달라질 수 있습니다. 재무상태와 손익, 자산 변동 등이 평가 결과에 영향을 주기 때문입니다."
     },
     {
       q: "기업의 매출이 증가하면 주식가치도 반드시 상승한다.",
-      a: "e8zu2w",    // 정답: X
+      a: "1kcv6li",   // 정답: X
       right: "매출 증가만으로 주식가치 상승을 단정할 수는 없습니다. 수익성, 부채, 자산가치 등 여러 요소를 종합적으로 검토해야 합니다.",
       wrong: "매출이 늘었다고 해서 주식가치가 반드시 상승하는 것은 아닙니다. 매출보다 실제 이익과 재무상태가 더 중요한 영향을 줄 수도 있습니다."
     },
+    {
+      q: "이번 8월 토요특강 수강생에게는 비상장주식평가 실무 교재 300P가 제공된다.",
+      a: "1er4lul",   // 정답: X (실제로는 400P)
+      right: "이번 8월 토요특강에는 고경희 세무사의 비상장주식평가 실무 교재 400P 제공 혜택이 포함되어 있습니다. 브로셔 속 특별 혜택을 다시 한번 확인해 보세요.",
+      wrong: "이번 특강 수강생에게는 고경희 세무사의 비상장주식평가 실무 내용을 담은 400P 교재가 제공됩니다. 강의 후에도 상담과 실무에 계속 활용할 수 있도록 구성된 혜택입니다."
+    },
   ];
 
-  // ===== 결과 메시지 (correctCount로 인덱싱: 0개 정답 ~ 4개 정답) =====
-  // 전 문항 정답(5개)은 pass 화면에서 별도 처리.
+  // ===== 결과 메시지 (correctCount로 인덱싱: 0개 정답 ~ 3개 정답) =====
+  // 전 문항 정답(4개)은 pass 화면에서 별도 처리.
   const LEVELS = [
-    { // 0개 정답 (5개 오답)
+    { // 0개 정답 (4개 오답)
       title: '기초부터 다시 시작해요',
-      desc:  '사실 이 다섯 문제는 비상장주식 평가의 가장 기본적인 내용입니다. 실무에서 놓치기 전에, 24년 실무 노하우로 기초부터 다시 시작해 보세요.'
+      desc:  '사실 이 문제들은 비상장주식 평가의 가장 기본적인 내용입니다. 실무에서 놓치기 전에, 24년 실무 노하우로 기초부터 다시 시작해 보세요.'
     },
-    { // 1개 정답 (4개 오답)
+    { // 1개 정답 (3개 오답)
       title: '지금이 정리할 기회예요',
       desc:  '법인 상담은 하고 있지만, 비상장주식 평가에는 자신이 없으신가요? 지금이 가장 빠르게 정리할 수 있는 기회입니다.'
     },
-    { // 2개 정답 (3개 오답)
-      title: '생각보다 어려우셨나요?',
-      desc:  '많은 전문직들이 비상장주식 평가는 “어렵다”고 생각하며 미루고 있습니다.'
-    },
-    { // 3개 정답 (2개 오답)
-      title: '절반 이상 맞히셨어요',
+    { // 2개 정답 (2개 오답)
+      title: '절반을 맞히셨어요',
       desc:  '비상장주식 평가의 핵심 개념은 알고 있지만, 실무 적용에는 조금 더 보완이 필요합니다.'
     },
-    { // 4개 정답 (1개 오답)
+    { // 3개 정답 (1개 오답)
       title: '아쉽게 한 문제!',
       desc:  '기본 개념은 충분합니다. 하지만 실무에서는 그 한 문제가 결과를 바꾸기도 합니다.'
     },
@@ -644,7 +634,7 @@
   // 전 문항 정답일 때 사용자의 정답 시퀀스로만 복호화됩니다(평문 노출 방지).
   const _SALT = 'rdq-2026';
   const _KEYSALT = 'aimhigh!';
-  const _FORM_ENC = 'WEVFQEJbRkIMBgQbD1deXlddBEcOBwRIDk5CXEIfVU4MQlkvJiFRYX1iVlRQUCwbLjgtagB4Z1dHNCAJPF4OIUdoAVlXdxI6Cy4jXxhuWnR0AHcUGh8wESQfDkZYVEdXDhsAVxwUGBxAQW5FQw1PCAYdFREPAgADBwlRUVhbXFo=';
+  const _FORM_ENC = 'WURFQRJTQkcNCAtSH1deXgYFCEYKCAUOV19DXBJGCUcMSFlncHlBYC06Cw1YXilSdm90elEgOw8fMiFFZQdYeAcxXQAOIRtyV3Z7CREmBy0sVy5UQkJpSSIeQh4AAh9HXkJcDhQaHVUZFzdUQ1wXVA8dHxFHVVkTBggBCVRaWFU=';
 
   function _fnv(s){
     let x = 0x811c9dc5;
