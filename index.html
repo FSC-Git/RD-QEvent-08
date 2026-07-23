@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIM HIGH — 비상장주식 평가 OX 퀴즈</title>
+<meta property="og:type"         content="website">
+<meta property="og:url"          content="https://fsc-git.github.io/RD-QEvent-08/">
+<meta property="og:title"        content="비상장주식 평가, 나는 얼마나 알고 있을까?">
+<meta property="og:description"  content="간단한 O/X 5문항으로 확인해보세요. 전 문항 정답 시 특별한 기회를 드립니다!">
+<meta property="og:image"        content="https://fsc-git.github.io/RD-QEvent-08/thumbnail.png?v=5">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:         #F2F4F6;
+    --card:       #FFFFFF;
+    --teal:       #00C2B2;
+    --teal-lo:    rgba(0,194,178,0.09);
+    --teal-mid:   rgba(0,194,178,0.18);
+    --navy:       #191F28;
+    --muted:      #6B7684;
+    --muted-2:    #9BA8B4;
+    --line:       #E5E8EB;
+    --crimson:    #E05A52;
+    --crimson-lo: rgba(224,90,82,0.08);
+    --gold:       #F0A500;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--navy);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+    word-break: keep-all;
+  }
+
+  /* 폭죽 캔버스 */
+  #confetti-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 999;
+    display: none;
+  }
+
+  .doc {
+    width: 100%;
+    max-width: 600px;
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow:
+      0 2px 4px rgba(0,0,0,0.04),
+      0 12px 40px rgba(0,0,0,0.10);
+    overflow: hidden;
+  }
+
+  /* 헤더 */
+  .doc-header {
+    background: var(--navy);
+    padding: 14px 28px;
+    text-align: center;
+  }
+  .doc-header .brand {
+    font-size: 10.5px;
+    letter-spacing: 0.13em;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+  }
+
+  .doc-inner { padding: 32px 28px 36px; }
+
+  /* 인트로 */
+  h1.title {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 900;
+    font-size: 26px;
+    line-height: 1.45;
+    margin: 0 0 10px;
+    color: var(--navy);
+  }
+  .title .accent { color: var(--teal); }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.75;
+    margin: 0 0 28px;
+  }
+  .subtitle b { color: var(--navy); font-weight: 700; }
+
+  /* 이벤트 안내 */
+  .rules {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 18px 20px 16px;
+    margin-bottom: 24px;
+  }
+  .rules-head {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .rules ul {
+    margin: 0; padding: 0;
+    list-style: none;
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: var(--muted);
+  }
+  .rules ul li { padding-left: 16px; position: relative; }
+  .rules ul li::before {
+    content: "·";
+    position: absolute;
+    left: 3px;
+    color: var(--teal);
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .rules li b { color: var(--navy); font-weight: 700; }
+
+  /* 마감 카운트다운 배너 */
+  .deadline {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px;
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 13px 16px;
+    margin-bottom: 16px;
+  }
+  .deadline-label {
+    font-size: 12px; font-weight: 500;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.02em;
+  }
+  .deadline-time {
+    font-size: 18px; font-weight: 700;
+    color: var(--teal);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+  .deadline.ending .deadline-time { color: var(--crimson); }
+
+  .start-btn {
+    width: 100%;
+    padding: 16px 0;
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background .15s ease, box-shadow .15s ease, transform .1s ease;
+  }
+  .start-btn:hover { background: #00A89A; box-shadow: 0 4px 16px rgba(0,194,178,0.28); }
+  .start-btn:active { transform: scale(0.99); }
+  .start-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+  /* 퀴즈 화면 */
+  .quiz-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .quiz-tag { font-size: 12px; font-weight: 700; color: var(--teal); letter-spacing: 0.04em; }
+  .quiz-score { font-size: 12px; color: var(--muted); }
+
+  .progress-track { display: flex; gap: 6px; margin-bottom: 14px; }
+  .progress-dot {
+    flex: 1; height: 4px;
+    background: var(--line);
+    border-radius: 4px;
+    transition: background .2s ease;
+  }
+  .progress-dot.done { background: var(--teal); }
+  .progress-dot.now  { background: var(--teal); opacity: 0.45; }
+
+  /* 타이머 */
+  .timer { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+  .timer-bar {
+    flex: 1; height: 6px;
+    background: var(--line);
+    border-radius: 6px; overflow: hidden;
+  }
+  .timer-fill {
+    height: 100%; width: 100%;
+    background: var(--teal);
+    border-radius: 6px;
+    transition: width 1s linear, background .3s ease;
+  }
+  .timer-fill.warn   { background: var(--gold); }
+  .timer-fill.danger { background: var(--crimson); }
+  .timer-num {
+    font-size: 12px; font-weight: 700;
+    color: var(--muted);
+    min-width: 34px; text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .timer-num.danger { color: var(--crimson); }
+
+  .q-number {
+    font-size: 12px; font-weight: 700;
+    color: var(--teal); letter-spacing: 0.06em;
+    margin-bottom: 8px; text-transform: uppercase;
+  }
+  .q-text {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 700; font-size: 18px;
+    line-height: 1.6; margin: 0 0 20px;
+    min-height: 54px; color: var(--navy);
+  }
+
+  .options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 6px; }
+  .opt {
+    display: flex; align-items: center; gap: 12px;
+    text-align: left;
+    border: 1.5px solid var(--line);
+    background: var(--card);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 14px; color: var(--navy);
+    cursor: pointer;
+    transition: border-color .12s ease, background .12s ease;
+  }
+  .opt:hover { border-color: var(--teal); background: var(--teal-lo); }
+  .opt:focus-visible { outline: 3px solid var(--gold); outline-offset: 1px; }
+  .opt .mark {
+    width: 24px; height: 24px;
+    border: 1.5px solid var(--line);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    flex-shrink: 0; color: var(--muted);
+    transition: all .12s ease;
+  }
+  .opt:hover .mark { border-color: var(--teal); color: var(--teal); }
+  .opt.correct { border-color: var(--teal); background: var(--teal-lo); }
+  .opt.correct .mark { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .opt.wrong { border-color: var(--crimson); background: var(--crimson-lo); }
+  .opt.wrong .mark { background: var(--crimson); color: #fff; border-color: var(--crimson); }
+  .opt[disabled] { cursor: default; }
+  .opt:not(.correct):not(.wrong)[disabled] { opacity: 0.38; }
+
+  /* O/X 2지선다 (왼쪽 O, 오른쪽 X) */
+  .ox-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ox-opt {
+    flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px; padding: 40px 0;
+    text-align: center;
+  }
+  .ox-mark {
+    font-size: 76px; font-weight: 900; line-height: 1;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .ox-opt[data-choice="O"] .ox-mark { color: var(--teal); }
+  .ox-opt[data-choice="X"] .ox-mark { color: var(--crimson); }
+  .ox-label { font-size: 13px; font-weight: 700; color: var(--muted); }
+  .ox-opt[data-choice="O"]:hover { border-color: var(--teal); background: var(--teal-lo); }
+  .ox-opt[data-choice="X"]:hover { border-color: var(--crimson); background: var(--crimson-lo); }
+  /* 채점 후: O/X 글자색은 항상 고정(O=파랑, X=빨강). 배경만 정답=파랑 / 오답=빨강 */
+  .ox-opt.correct { border-color: var(--teal);    background: var(--teal-mid); }
+  .ox-opt.wrong   { border-color: var(--crimson); background: rgba(224,90,82,0.18); }
+
+  .feedback {
+    margin-top: 14px; padding: 14px 16px;
+    border-radius: 10px;
+    background: var(--teal-lo);
+    border: 1.5px solid rgba(0,194,178,0.22);
+    font-size: 13px; line-height: 1.75;
+    color: var(--muted); display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback .fb-label { font-weight: 700; font-size: 12.5px; margin-bottom: 5px; color: var(--teal); }
+  .feedback.miss { background: var(--crimson-lo); border-color: rgba(224,90,82,0.2); }
+  .feedback.miss .fb-label { color: var(--crimson); }
+
+  .next-btn {
+    width: 100%; margin-top: 18px; padding: 14px 0;
+    background: var(--navy); color: #fff;
+    border: none; border-radius: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700; font-size: 14px;
+    letter-spacing: 0.02em; cursor: pointer;
+    display: none; transition: background .15s ease;
+  }
+  .next-btn.show { display: block; }
+  .next-btn:hover { background: #2C3A4A; }
+  .next-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+  /* 결과 화면 */
+  .result { text-align: center; }
+  .stamp-wrap {
+    display: flex; justify-content: center;
+    margin: 4px 0 20px; height: 130px; align-items: center;
+  }
+  .stamp {
+    width: 116px; height: 116px;
+    border-radius: 50%;
+    border: 3px solid var(--teal);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--teal);
+    transform: rotate(-12deg) scale(0);
+    animation: stampIn .5s cubic-bezier(.2,1.4,.4,1) forwards;
+    position: relative;
+    background: var(--teal-lo);
+  }
+  .stamp::before {
+    content: "";
+    position: absolute; inset: 8px;
+    border: 1.5px dashed rgba(0,194,178,0.45);
+    border-radius: 50%;
+  }
+  .stamp .s1 { font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 24px; letter-spacing: 0.04em; }
+  .stamp .s2 { font-size: 10px; letter-spacing: 0.18em; margin-top: 4px; opacity: 0.7; }
+  .stamp.miss { border-color: var(--muted-2); color: var(--muted-2); background: rgba(0,0,0,0.02); }
+  .stamp.miss::before { border-color: var(--muted-2); opacity: 0.4; }
+
+  @keyframes stampIn {
+    0%   { transform: rotate(-12deg) scale(2.2); opacity: 0; }
+    60%  { opacity: 1; }
+    100% { transform: rotate(-12deg) scale(1); opacity: 1; }
+  }
+
+  .result h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 900; font-size: 22px;
+    margin: 0 0 8px; color: var(--navy);
+  }
+  .level-desc {
+    font-size: 14px; font-weight: 700;
+    color: var(--teal);
+    line-height: 1.65;
+    margin: 0 0 10px; padding: 0 4px;
+  }
+  .result p.desc {
+    font-size: 13.5px; color: var(--muted);
+    line-height: 1.8; margin: 0 0 24px; padding: 0 4px;
+  }
+  .result p.desc b { color: var(--teal); font-weight: 700; }
+
+  .rank-box {
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    background: var(--bg);
+    padding: 18px 20px;
+    margin-bottom: 20px; text-align: left;
+  }
+  .rank-row {
+    display: flex; justify-content: space-between;
+    align-items: center; font-size: 13px;
+    padding: 7px 0; color: var(--muted);
+  }
+  .rank-row + .rank-row { border-top: 1px solid var(--line); }
+  .rank-row b { color: var(--navy); font-weight: 700; }
+  .entry-code { color: var(--teal); cursor: pointer; user-select: all; letter-spacing: 0.02em; }
+  .code-hint {
+    font-size: 12px; color: var(--muted);
+    background: var(--teal-lo);
+    border-radius: 8px; padding: 9px 12px;
+    margin: -8px 0 18px; line-height: 1.6;
+  }
+  .code-hint b { color: var(--teal); font-weight: 700; }
+
+  .cta-btn {
+    display: block; width: 100%; padding: 16px 0;
+    background: var(--teal); color: #fff;
+    text-decoration: none; border-radius: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700; font-size: 15px;
+    letter-spacing: 0.02em; text-align: center;
+    transition: background .15s ease, box-shadow .15s ease;
+  }
+  .cta-btn:hover { background: #00A89A; box-shadow: 0 4px 16px rgba(0,194,178,0.28); }
+  .cta-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .cta-btn.disabled {
+    background: var(--muted-2);
+    cursor: default; pointer-events: none;
+    box-shadow: none;
+  }
+
+  .cta-sub {
+    margin-top: 14px; border: none; background: none;
+    color: var(--muted); font-size: 12.5px;
+    text-decoration: underline; cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: color .12s ease;
+  }
+  .cta-sub:hover { color: var(--navy); }
+
+  /* 카운트다운(오픈 전) */
+  .countdown {
+    font-variant-numeric: tabular-nums;
+    font-size: 26px; font-weight: 700;
+    color: var(--teal); letter-spacing: 0.02em;
+    margin: 2px 0 22px;
+  }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stamp { animation: none; transform: rotate(-12deg) scale(1); opacity: 1; }
+  }
+  @media (max-width: 480px) {
+    .doc-inner { padding: 24px 20px 30px; }
+    .doc-header { padding: 12px 20px; }
+    h1.title { font-size: 23px; }
+    .q-text { font-size: 16.5px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="doc">
+
+  <div class="doc-header">
+    <span class="brand">RICHDIVINE × AIMHIGH <span style="color:var(--teal);letter-spacing:0.08em;">8월 토요특강</span> 콜라보 이벤트</span>
+  </div>
+
+  <div class="doc-inner">
+
+    <!-- SCREEN 1: INTRO -->
+    <section class="screen active" id="screen-intro">
+      <h1 class="title">비상장주식 평가,<br><span class="accent">나는 얼마나 알고 있을까?</span></h1>
+      <p class="subtitle">간단한 O/X 5문항으로 확인해보세요.<br><b>전 문항을 맞추시면 특별한 선물의 기회를 드립니다!</b></p>
+
+      <div class="rules">
+        <div class="rules-head">이벤트 안내</div>
+        <ul>
+          <li>총 <b>5문항</b>이 출제됩니다.</li>
+          <li><b>전 문항 정답</b>을 맞힌 참가자 중 <b>추첨을 통해 3명</b>에게 무료 수강 자격을 드립니다.</li>
+          <li>문항을 풀어가는 과정에서 강의에서 다루는 핵심 내용을 미리 경험하실 수 있습니다.</li>
+        </ul>
+      </div>
+
+      <div class="deadline" id="intro-deadline">
+        <span class="deadline-label">이벤트 마감까지</span>
+        <span class="deadline-time" id="intro-countdown">--:--:--</span>
+      </div>
+
+      <button class="start-btn" id="btn-start">퀴즈 풀어보기</button>
+    </section>
+
+    <!-- SCREEN 2: QUIZ -->
+    <section class="screen" id="screen-quiz">
+      <div class="quiz-head">
+        <span class="quiz-tag" id="quiz-tag">문항 1 / 5</span>
+        <span class="quiz-score" id="quiz-score">정답 0개</span>
+      </div>
+      <div class="progress-track" id="progress-track"></div>
+
+      <div class="timer" id="timer">
+        <div class="timer-bar"><div class="timer-fill" id="timer-fill"></div></div>
+        <span class="timer-num" id="timer-num">20초</span>
+      </div>
+
+      <div class="q-number" id="q-number">Q1.</div>
+      <h2 class="q-text" id="q-text"></h2>
+      <div class="options" id="options"></div>
+
+      <div class="feedback" id="feedback">
+        <div class="fb-label" id="fb-label"></div>
+        <div id="fb-body"></div>
+      </div>
+
+      <button class="next-btn" id="btn-next">다음 문항</button>
+    </section>
+
+    <!-- SCREEN 3: RESULT - PASS -->
+    <section class="screen" id="screen-pass">
+      <div class="result">
+        <div class="stamp-wrap">
+          <div class="stamp">
+            <div class="s1">合 格</div>
+            <div class="s2">PASS</div>
+          </div>
+        </div>
+        <h2>전 문항 정답입니다! 🎉</h2>
+        <p class="desc">비상장주식 평가의 기본 개념은 이미 잘 알고 계십니다.<br>이제는 실무 사례와 상담 노하우를 익힐 차례입니다.</p>
+        <p class="desc">아래 <b>참가 코드</b>를 신청 폼에 입력하면 응모가 완료됩니다.<br>전 문항 정답자 중 <b>추첨을 통해 3명</b>에게 무료 수강 자격이 부여됩니다.</p>
+
+        <div class="rank-box">
+          <div class="rank-row"><span>응시 결과</span><b id="pass-score">5 / 5</b></div>
+          <div class="rank-row"><span>참가 코드</span><b id="entry-code" class="entry-code" title="클릭하면 복사됩니다">발급 중…</b></div>
+          <div class="rank-row"><span>추첨 안내</span><b>강의 신청 후 결과 개별 연락</b></div>
+        </div>
+
+        <div class="code-hint"><b>신청하기</b>를 누르면 위 <b>참가 코드</b>가 폼에 자동 입력됩니다. 코드는 <b>1회만</b> 사용할 수 있습니다.</div>
+
+        <a class="cta-btn" id="cta-apply" href="#" target="_blank" rel="noopener">참가 코드로 신청하기 →</a>
+        <button class="cta-sub" id="btn-retry-pass">처음으로 돌아가기</button>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: RESULT - PARTIAL -->
+    <section class="screen" id="screen-partial">
+      <div class="result">
+        <div class="stamp-wrap">
+          <div class="stamp miss">
+            <div class="s1">미 달</div>
+            <div class="s2">RETRY</div>
+          </div>
+        </div>
+        <h2 id="partial-title">아쉽게 한 문제!</h2>
+        <p class="desc" id="partial-msg">기본 개념은 충분합니다.</p>
+
+        <div class="rank-box">
+          <div class="rank-row"><span>정답</span><b id="partial-score">0 / 5</b></div>
+          <div class="rank-row"><span>오답</span><b id="partial-wrong">0개</b></div>
+        </div>
+
+        <a class="cta-btn" id="cta-info" href="https://aim-high.biz/course/offline-course-260808ou/?mark=Q" target="_blank" rel="noopener">강의 안내 보러가기 →</a>
+        <button class="cta-sub" id="btn-retry-partial">다시 응시하기</button>
+      </div>
+    </section>
+
+    <!-- SCREEN 5: CLOSED (오픈 전 / 종료) -->
+    <section class="screen" id="screen-closed">
+      <div class="result">
+        <div class="stamp-wrap">
+          <div class="stamp miss" id="closed-stamp">
+            <div class="s1" id="closed-stamp1">마 감</div>
+            <div class="s2" id="closed-stamp2">CLOSED</div>
+          </div>
+        </div>
+        <h2 id="closed-title">이벤트가 종료되었습니다</h2>
+        <div class="countdown" id="closed-countdown" style="display:none;"></div>
+        <p class="desc" id="closed-desc"></p>
+
+        <a class="cta-btn" id="closed-cta" href="https://aim-high.biz/course/offline-course-260808ou/?mark=Q" target="_blank" rel="noopener">강의 안내 보러가기 →</a>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // ===== 이벤트 운영 기간 (KST 한국시간 고정) =====
+  // 지금 바로 오픈 → 토요일(6/27) 08:30 마감.
+  // START는 과거로 둬서 '오픈 전' 안내 없이 즉시 열림.
+  const EVENT_START = new Date('2026-06-25T00:00:00+09:00');
+  const EVENT_END   = new Date('2026-08-31T23:59:00+09:00');   // ⚠️ 임시(검토용). 실제 8월 오픈/마감일로 교체 필요
+
+  // ===== 1회용 코드 백엔드 (Google Apps Script 웹앱) =====
+  const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycby6k_lLX0JHgi7C8cgTNgWVVGSxqE2uVG7cHnEA_94rYF-tsmkSg5QEDuH_VTMtdVBvWQ/exec';
+
+  // ===== 퀴즈 시작(시도) 집계 =====
+  // 이중 dedup: (1) 브라우저 localStorage 가드로 재전송 차단  (2) 서버는 IP 해시로 최종 중복 제거
+  // IP 원문은 서버로 보내지 않고 브라우저에서 SHA-256 해시만 전송합니다.
+  const START_FLAG = 'rdq_2026_08_started';   // 이 브라우저에서 이미 집계했는지 표시
+  const IP_SALT    = 'rdq-start-2026';        // IP 해시용 솔트(공개 소스라 비밀은 아님, 가벼운 난독화용)
+
+  // ===== 퀴즈 데이터 (O/X) =====
+  //  a = _fnv(문항번호 + ':' + 정답인덱스 + _SALT),  O=0 / X=1
+  //  right = 정답 선택 시 해설, wrong = 오답 선택 시 해설
+  const QUIZ = [
+    {
+      q: "비상장주식 평가는 가업승계와 증여 시 중요한 기준이 된다.",
+      a: "1x19jhb",   // 정답: O
+      right: "가업승계나 증여 과정에서는 주식의 가액이 세금 산정의 중요한 기준이 됩니다. 따라서 비상장주식의 가치를 미리 파악하는 것이 승계 전략의 출발점입니다.",
+      wrong: "비상장주식 평가는 가업승계와 증여 시 매우 중요한 기준입니다. 주식가치에 따라 증여세와 상속세 부담이 달라질 수 있기 때문에 사전 검토가 필요합니다."
+    },
+    {
+      q: "순자산만 알면 비상장주식 평가를 할 수 있다.",
+      a: "dhamzn",    // 정답: X
+      right: "비상장주식 평가는 순자산만으로 결정되지 않습니다. 일반적으로 순손익가치와 순자산가치 등 여러 요소를 함께 검토해야 합니다.",
+      wrong: "순자산만으로는 정확한 비상장주식 평가가 어렵습니다. 기업의 수익성과 자산가치 등 다양한 요소를 함께 고려해야 합니다."
+    },
+    {
+      q: "비상장주식 평가는 세무사만 알면 되는 업무다.",
+      a: "1kcv6li",   // 정답: X
+      right: "비상장주식 평가는 세무사뿐 아니라 법인 상담을 하는 전문직도 이해해야 하는 영역입니다. 가업승계, 지분 정리, 증여 상담 등 다양한 상황에서 활용되기 때문입니다.",
+      wrong: "비상장주식 평가는 세무사만의 업무로 보기 어렵습니다. 법인 컨설팅을 하는 전문직이라면 상담의 흐름과 핵심 기준을 이해할 필요가 있습니다."
+    },
+    {
+      q: "같은 기업이라도 평가기준일이 달라지면 주식가치가 달라질 수 있다.",
+      a: "1p4w4he",   // 정답: O
+      right: "평가기준일이 달라지면 적용되는 재무정보와 기업 상황도 달라질 수 있습니다. 따라서 같은 기업이라도 평가 시점에 따라 주식가치가 달라질 수 있습니다.",
+      wrong: "같은 기업이라도 평가 시점이 달라지면 주식가치가 달라질 수 있습니다. 재무상태와 손익, 자산 변동 등이 평가 결과에 영향을 주기 때문입니다."
+    },
+    {
+      q: "기업의 매출이 증가하면 주식가치도 반드시 상승한다.",
+      a: "e8zu2w",    // 정답: X
+      right: "매출 증가만으로 주식가치 상승을 단정할 수는 없습니다. 수익성, 부채, 자산가치 등 여러 요소를 종합적으로 검토해야 합니다.",
+      wrong: "매출이 늘었다고 해서 주식가치가 반드시 상승하는 것은 아닙니다. 매출보다 실제 이익과 재무상태가 더 중요한 영향을 줄 수도 있습니다."
+    },
+  ];
+
+  // ===== 결과 메시지 (correctCount로 인덱싱: 0개 정답 ~ 4개 정답) =====
+  // 전 문항 정답(5개)은 pass 화면에서 별도 처리.
+  const LEVELS = [
+    { // 0개 정답 (5개 오답)
+      title: '기초부터 다시 시작해요',
+      desc:  '사실 이 다섯 문제는 비상장주식 평가의 가장 기본적인 내용입니다. 실무에서 놓치기 전에, 24년 실무 노하우로 기초부터 다시 시작해 보세요.'
+    },
+    { // 1개 정답 (4개 오답)
+      title: '지금이 정리할 기회예요',
+      desc:  '법인 상담은 하고 있지만, 비상장주식 평가에는 자신이 없으신가요? 지금이 가장 빠르게 정리할 수 있는 기회입니다.'
+    },
+    { // 2개 정답 (3개 오답)
+      title: '생각보다 어려우셨나요?',
+      desc:  '많은 전문직들이 비상장주식 평가는 “어렵다”고 생각하며 미루고 있습니다.'
+    },
+    { // 3개 정답 (2개 오답)
+      title: '절반 이상 맞히셨어요',
+      desc:  '비상장주식 평가의 핵심 개념은 알고 있지만, 실무 적용에는 조금 더 보완이 필요합니다.'
+    },
+    { // 4개 정답 (1개 오답)
+      title: '아쉽게 한 문제!',
+      desc:  '기본 개념은 충분합니다. 하지만 실무에서는 그 한 문제가 결과를 바꾸기도 합니다.'
+    },
+  ];
+
+  // ===== 문항별 제한시간(초) =====
+  // 기본 20초. 특정 문항만 다르게 주려면 QUIZ 항목에 time: 30 처럼 추가하면 됩니다.
+  const TIME_LIMIT = 20;
+
+  let current = 0, correctCount = 0, answered = false;
+  let timerId = null, timeLeft = 0;
+  let userAnswers = [];
+
+  // ===== 정답 검증 & 신청 폼 링크 난독화 =====
+  // 정답은 해시(a)로만 저장되고, 신청 폼 URL은 인코딩되어 있다가
+  // 전 문항 정답일 때 사용자의 정답 시퀀스로만 복호화됩니다(평문 노출 방지).
+  const _SALT = 'rdq-2026';
+  const _KEYSALT = 'aimhigh!';
+  const _FORM_ENC = 'WEVFQEJbRkIMBgQbD1deXlddBEcOBwRIDk5CXEIfVU4MQlkvJiFRYX1iVlRQUCwbLjgtagB4Z1dHNCAJPF4OIUdoAVlXdxI6Cy4jXxhuWnR0AHcUGh8wESQfDkZYVEdXDhsAVxwUGBxAQW5FQw1PCAYdFREPAgADBwlRUVhbXFo=';
+
+  function _fnv(s){
+    let x = 0x811c9dc5;
+    for(let i = 0; i < s.length; i++){ x ^= s.charCodeAt(i); x = Math.imul(x, 0x01000193); }
+    return (x >>> 0).toString(36);
+  }
+  function correctIndexOf(qi){
+    const item = QUIZ[qi];
+    for(let k = 0; k < 2; k++){   // O=0, X=1
+      if(_fnv(qi + ':' + k + _SALT) === item.a) return k;
+    }
+    return -1;
+  }
+  function decodeForm(ans){
+    const key = ans.join('') + _KEYSALT;
+    const bin = atob(_FORM_ENC);
+    let o = '';
+    for(let i = 0; i < bin.length; i++) o += String.fromCharCode(bin.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+    return o;
+  }
+
+  const screens = {
+    intro:   document.getElementById('screen-intro'),
+    quiz:    document.getElementById('screen-quiz'),
+    pass:    document.getElementById('screen-pass'),
+    partial: document.getElementById('screen-partial'),
+    closed:  document.getElementById('screen-closed'),
+  };
+
+  function showScreen(name){
+    Object.values(screens).forEach(s => s.classList.remove('active'));
+    screens[name].classList.add('active');
+  }
+
+  // ===== 이벤트 기간 게이트 =====
+  function eventState(){
+    const now = Date.now();
+    if(now < EVENT_START.getTime()) return 'before';
+    if(now >= EVENT_END.getTime())  return 'after';
+    return 'open';
+  }
+  function fmtKST(d){
+    return d.toLocaleString('ko-KR', {
+      timeZone: 'Asia/Seoul', month: 'long', day: 'numeric',
+      weekday: 'short', hour: 'numeric', minute: '2-digit', hour12: true
+    });
+  }
+  function hms(ms){
+    const t = Math.max(0, Math.floor(ms / 1000));
+    const p = n => String(n).padStart(2, '0');
+    return `${p(Math.floor(t/3600))}:${p(Math.floor((t%3600)/60))}:${p(t%60)}`;
+  }
+  function dhms(ms){
+    let t = Math.max(0, Math.floor(ms / 1000));
+    const d = Math.floor(t / 86400); t -= d * 86400;
+    const p = n => String(n).padStart(2, '0');
+    const hh = p(Math.floor(t/3600)), mm = p(Math.floor((t%3600)/60)), ss = p(t%60);
+    return (d > 0 ? d + '일 ' : '') + `${hh}:${mm}:${ss}`;
+  }
+
+  // ===== 마감까지 남은 시간 카운트다운 (인트로 화면) =====
+  let deadlineId = null;
+  function startDeadline(){
+    if(deadlineId){ clearInterval(deadlineId); deadlineId = null; }
+    const banner = document.getElementById('intro-deadline');
+    const el = document.getElementById('intro-countdown');
+    const tick = () => {
+      const diff = EVENT_END.getTime() - Date.now();
+      if(diff <= 0){
+        clearInterval(deadlineId); deadlineId = null;
+        stopTimer();
+        applyGate();   // 마감 → closed 화면
+        return;
+      }
+      el.textContent = dhms(diff);
+      banner.classList.toggle('ending', diff <= 60 * 60 * 1000); // 1시간 이하 빨간색
+    };
+    tick();
+    deadlineId = setInterval(tick, 1000);
+  }
+  function stopDeadline(){
+    if(deadlineId){ clearInterval(deadlineId); deadlineId = null; }
+  }
+
+  let countdownId = null;
+  function renderClosed(state){
+    if(countdownId){ clearInterval(countdownId); countdownId = null; }
+    const stamp1 = document.getElementById('closed-stamp1');
+    const stamp2 = document.getElementById('closed-stamp2');
+    const title  = document.getElementById('closed-title');
+    const desc   = document.getElementById('closed-desc');
+    const cd     = document.getElementById('closed-countdown');
+
+    if(state === 'before'){
+      stamp1.textContent = '예 정';
+      stamp2.textContent = 'SOON';
+      title.textContent  = '이벤트 오픈 전입니다';
+      desc.innerHTML     = `이벤트는 <b>${fmtKST(EVENT_START)}</b>에 시작됩니다.<br>잠시 후 다시 찾아주세요!`;
+      cd.style.display = 'block';
+      const tick = () => {
+        const diff = EVENT_START.getTime() - Date.now();
+        if(diff <= 0){ clearInterval(countdownId); countdownId = null; applyGate(); return; }
+        cd.textContent = '오픈까지 ' + hms(diff);
+      };
+      tick();
+      countdownId = setInterval(tick, 1000);
+    } else {
+      stamp1.textContent = '마 감';
+      stamp2.textContent = 'CLOSED';
+      title.textContent  = '이벤트가 종료되었습니다';
+      desc.innerHTML     = '많은 참여 감사드립니다.<br>아쉽지만 이번 이벤트는 마감되었습니다.<br><b>다음 기회에 다시 만나요!</b>';
+      cd.style.display = 'none';
+    }
+  }
+  function applyGate(){
+    const st = eventState();
+    if(st === 'open'){ showScreen('intro'); startDeadline(); }
+    else { stopDeadline(); renderClosed(st); showScreen('closed'); }
+  }
+
+  function buildProgress(){
+    const track = document.getElementById('progress-track');
+    track.innerHTML = '';
+    QUIZ.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'progress-dot';
+      if(i < current)   dot.classList.add('done');
+      if(i === current) dot.classList.add('now');
+      track.appendChild(dot);
+    });
+  }
+
+  function renderQuestion(){
+    answered = false;
+    const item = QUIZ[current];
+    document.getElementById('quiz-tag').textContent   = `문항 ${current+1} / ${QUIZ.length}`;
+    document.getElementById('quiz-score').textContent = `정답 ${correctCount}개`;
+    document.getElementById('q-number').textContent   = `Q${current+1}.`;
+    document.getElementById('q-text').textContent     = item.q;
+    buildProgress();
+
+    const optWrap = document.getElementById('options');
+    optWrap.className = 'options ox-options';
+    optWrap.innerHTML = '';
+    // O = index 0 (왼쪽), X = index 1 (오른쪽)
+    [['O','맞다'], ['X','아니다']].forEach((pair, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt ox-opt';
+      btn.dataset.choice = pair[0];
+      btn.innerHTML = `<span class="ox-mark">${pair[0]}</span><span class="ox-label">${pair[1]}</span>`;
+      btn.addEventListener('click', () => handleAnswer(idx));
+      optWrap.appendChild(btn);
+    });
+
+    document.getElementById('feedback').classList.remove('show','right','miss');
+    document.getElementById('btn-next').classList.remove('show');
+
+    startTimer();
+  }
+
+  // ===== 타이머 =====
+  function startTimer(){
+    stopTimer();
+    const limit = QUIZ[current].time || TIME_LIMIT;
+    timeLeft = limit;
+    const fill = document.getElementById('timer-fill');
+    const num  = document.getElementById('timer-num');
+    fill.classList.remove('warn','danger');
+    num.classList.remove('danger');
+    num.textContent = limit + '초';
+    // 트랜지션 없이 바를 100%로 즉시 리셋
+    fill.style.transition = 'none';
+    fill.style.width = '100%';
+    void fill.offsetWidth;
+    fill.style.transition = '';
+    timerId = setInterval(tick, 1000);
+  }
+
+  function tick(){
+    timeLeft--;
+    const limit = QUIZ[current].time || TIME_LIMIT;
+    const fill = document.getElementById('timer-fill');
+    const num  = document.getElementById('timer-num');
+    const shown = Math.max(0, timeLeft);
+    fill.style.width = (shown / limit * 100) + '%';
+    num.textContent = shown + '초';
+    fill.classList.toggle('warn',   timeLeft <= limit * 0.5 && timeLeft > limit * 0.25);
+    fill.classList.toggle('danger', timeLeft <= limit * 0.25);
+    num.classList.toggle('danger',  timeLeft <= limit * 0.25);
+    if(timeLeft <= 0){ stopTimer(); handleTimeout(); }
+  }
+
+  function stopTimer(){
+    if(timerId){ clearInterval(timerId); timerId = null; }
+  }
+
+  function handleTimeout(){
+    if(answered) return;
+    answered = true;
+    userAnswers[current] = -1;
+    const correctIdx = correctIndexOf(current);
+    const item = QUIZ[current];
+    document.querySelectorAll('.opt').forEach((el, i) => {
+      el.disabled = true;
+      if(i === correctIdx) el.classList.add('correct');
+    });
+
+    const fb = document.getElementById('feedback');
+    fb.classList.add('show', 'miss');
+    document.getElementById('fb-label').textContent = '✗ 시간 초과';
+    document.getElementById('fb-body').textContent  = item.wrong;
+
+    const nextBtn = document.getElementById('btn-next');
+    nextBtn.classList.add('show');
+    nextBtn.textContent = current === QUIZ.length - 1 ? '결과 확인하기' : '다음 문항';
+  }
+
+  function handleAnswer(idx){
+    if(answered) return;
+    answered = true;
+    stopTimer();
+    userAnswers[current] = idx;
+    const correctIdx = correctIndexOf(current);
+    const item = QUIZ[current];
+    document.querySelectorAll('.opt').forEach((el, i) => {
+      el.disabled = true;
+      if(i === correctIdx) el.classList.add('correct');
+      if(i === idx && idx !== correctIdx) el.classList.add('wrong');
+    });
+
+    const isRight = idx === correctIdx;
+    if(isRight) correctCount++;
+    document.getElementById('quiz-score').textContent = `정답 ${correctCount}개`;
+
+    const fb = document.getElementById('feedback');
+    fb.classList.add('show', isRight ? 'right' : 'miss');
+    document.getElementById('fb-label').textContent = isRight ? '✓ 정답입니다' : '✗ 오답입니다';
+    document.getElementById('fb-body').textContent  = isRight ? item.right : item.wrong;
+
+    const nextBtn = document.getElementById('btn-next');
+    nextBtn.classList.add('show');
+    nextBtn.textContent = current === QUIZ.length - 1 ? '결과 확인하기' : '다음 문항';
+  }
+
+  document.getElementById('btn-next').addEventListener('click', () => {
+    current++;
+    current >= QUIZ.length ? finishQuiz() : renderQuestion();
+  });
+
+  function finishQuiz(){
+    stopTimer();
+    if(eventState() !== 'open'){ applyGate(); return; }
+    if(correctCount === QUIZ.length){
+      document.getElementById('pass-score').textContent = `${correctCount} / ${QUIZ.length}`;
+      showScreen('pass');
+      launchConfetti();
+      issueEntryCode(userAnswers);
+    } else {
+      const lv = LEVELS[correctCount];
+      document.getElementById('partial-title').textContent = lv.title;
+      document.getElementById('partial-msg').textContent   = lv.desc;
+      document.getElementById('partial-score').textContent = `${correctCount} / ${QUIZ.length}`;
+      document.getElementById('partial-wrong').textContent = `${QUIZ.length - correctCount}개`;
+      showScreen('partial');
+    }
+  }
+
+  // ===== 폭죽 =====
+  function launchConfetti(){
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx    = canvas.getContext('2d');
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.style.display = 'block';
+
+    const colors = ['#00C2B2','#F0A500','#FF6B6B','#6C63FF','#FFE66D','#4ECDC4','#FF9F43','#A8E6CF'];
+    const pieces = Array.from({length: 160}, () => ({
+      x:      Math.random() * canvas.width,
+      y:      Math.random() * -300 - 10,
+      w:      Math.random() * 11 + 5,
+      h:      Math.random() * 6  + 3,
+      color:  colors[Math.floor(Math.random() * colors.length)],
+      rot:    Math.random() * Math.PI * 2,
+      rotV:   (Math.random() - 0.5) * 0.14,
+      vy:     Math.random() * 4 + 2,
+      vx:     (Math.random() - 0.5) * 2.5,
+      opacity: 1,
+    }));
+
+    const startTime = Date.now();
+
+    function draw(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = false;
+      const elapsed = Date.now() - startTime;
+      pieces.forEach(p => {
+        p.y  += p.vy;
+        p.x  += p.vx;
+        p.rot += p.rotV;
+        if(elapsed > 2800) p.opacity = Math.max(0, p.opacity - 0.018);
+        if(p.y < canvas.height + 20 && p.opacity > 0) alive = true;
+        ctx.save();
+        ctx.globalAlpha = p.opacity;
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+      });
+      if(alive) requestAnimationFrame(draw);
+      else canvas.style.display = 'none';
+    }
+    requestAnimationFrame(draw);
+  }
+
+  // ===== 시작 집계 (중복 없이: 브라우저 가드 + 서버 IP 해시 dedup) =====
+  async function sha256Hex(str){
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+  function trackStart(){
+    try { if(localStorage.getItem(START_FLAG)) return; } catch(e){}   // 이 브라우저는 이미 집계됨 → 전송 안 함
+    (async () => {
+      let ipHash = '';
+      try {
+        const ip = (await (await fetch('https://api.ipify.org')).text()).trim();
+        if(ip) ipHash = await sha256Hex(ip + IP_SALT);
+      } catch(e){ /* IP 조회/해시 실패 시 이번엔 집계 생략 (다음 방문에 재시도) */ }
+      if(ipHash){
+        new Image().src = WEBAPP_URL + '?type=start&iph=' + ipHash + '&t=' + Date.now();
+        try { localStorage.setItem(START_FLAG, '1'); } catch(e){}
+      }
+    })();
+  }
+
+  document.getElementById('btn-start').addEventListener('click', () => {
+    if(eventState() !== 'open'){ applyGate(); return; }
+    trackStart();                        // 퀴즈 시도 집계 (중복 제거)
+    current = 0; correctCount = 0; userAnswers = [];
+    showScreen('quiz');
+    renderQuestion();
+  });
+  document.getElementById('btn-retry-pass').addEventListener('click', () => {
+    if(applyWaitId){ clearInterval(applyWaitId); applyWaitId = null; }  // 발급 대기 타이머 정리
+    showScreen('intro');
+  });
+  document.getElementById('btn-retry-partial').addEventListener('click', () => {
+    if(eventState() !== 'open'){ applyGate(); return; }
+    current = 0; correctCount = 0; userAnswers = [];
+    showScreen('quiz');
+    renderQuestion();
+  });
+
+  // ===== 1회용 코드 발급 (JSONP로 CORS 회피) =====
+  function requestCode(answers){
+    return new Promise(function(resolve){
+      var cbName = '_rdcb_' + Date.now() + '_' + Math.floor(Math.random() * 1e4);
+      var done = false;
+      var s = document.createElement('script');
+      function cleanup(){ try { delete window[cbName]; } catch(e){} if(s.parentNode) s.parentNode.removeChild(s); }
+      function finish(data){ if(done) return; done = true; cleanup(); resolve(data); }
+      window[cbName] = function(data){ finish(data); };
+      s.onerror = function(){ finish({ ok: false }); };
+      s.src = WEBAPP_URL + '?callback=' + cbName + '&ans=' + answers.join('');
+      document.body.appendChild(s);
+      setTimeout(function(){ finish({ ok: false }); }, 10000);  // Apps Script 콜드 스타트 대비
+    });
+  }
+
+  // 코드 발급 전까지 신청 버튼 잠금 + 대기 카운트다운
+  var applyWaitId = null;
+  function startApplyWait(){
+    var btn = document.getElementById('cta-apply');
+    btn.classList.add('disabled');
+    btn.removeAttribute('href');
+    btn.removeAttribute('data-mode');
+    var n = 3;
+    btn.textContent = '참가 코드 발급 중… ' + n;
+    if(applyWaitId) clearInterval(applyWaitId);
+    applyWaitId = setInterval(function(){
+      n--;
+      btn.textContent = n > 0 ? ('참가 코드 발급 중… ' + n) : '참가 코드 발급 중…';
+      if(n <= 0){ clearInterval(applyWaitId); applyWaitId = null; }
+    }, 1000);
+  }
+  function enableApply(href){
+    if(applyWaitId){ clearInterval(applyWaitId); applyWaitId = null; }
+    var btn = document.getElementById('cta-apply');
+    btn.classList.remove('disabled');
+    btn.removeAttribute('data-mode');
+    btn.setAttribute('href', href);
+    btn.textContent = '참가 코드로 신청하기 →';
+  }
+  function failApply(){
+    if(applyWaitId){ clearInterval(applyWaitId); applyWaitId = null; }
+    var btn = document.getElementById('cta-apply');
+    btn.classList.remove('disabled');       // 활성 상태로 (누를 수 있게)
+    btn.removeAttribute('href');
+    btn.setAttribute('data-mode', 'retry');  // 클릭 시 재발급
+    btn.textContent = '코드 다시 받기 ↻';
+  }
+
+  function issueEntryCode(answers, attempt){
+    attempt = attempt || 1;
+    var el = document.getElementById('entry-code');
+    el.textContent = '발급 중…';
+    el.removeAttribute('data-code');
+    startApplyWait();
+    // 1번째 시도: 0~1초 랜덤(동시 접속 부하 분산). 재시도: 선형 백오프 + 랜덤.
+    var jitter = attempt === 1
+      ? Math.random() * 1000
+      : (attempt - 1) * 1000 + Math.random() * 1000;
+    setTimeout(function(){
+      requestCode(answers).then(function(res){
+        if(res && res.ok && res.code){
+          el.textContent = res.code;
+          el.setAttribute('data-code', res.code);
+          // 발급된 코드를 폼에 자동입력되도록 신청 링크에 첨부 + 버튼 활성화
+          enableApply(decodeForm(answers) + encodeURIComponent(res.code));
+        } else if(attempt < 3){
+          issueEntryCode(answers, attempt + 1);  // 최대 3회 자동 재시도
+        } else {
+          el.textContent = '발급 실패';
+          failApply();
+        }
+      });
+    }, jitter);
+  }
+
+  // 코드 클릭: 발급됐으면 복사
+  document.getElementById('entry-code').addEventListener('click', function(){
+    var code = this.getAttribute('data-code');
+    if(code){
+      if(navigator.clipboard) navigator.clipboard.writeText(code).catch(function(){});
+      var self = this;
+      self.textContent = '복사됨 ✓';
+      setTimeout(function(){ self.textContent = code; }, 1000);
+    }
+  });
+
+  // 신청 버튼: 재시도 모드면 재발급, 잠금/미발급이면 클릭 차단
+  document.getElementById('cta-apply').addEventListener('click', function(e){
+    if(this.getAttribute('data-mode') === 'retry'){ e.preventDefault(); issueEntryCode(userAnswers); return; }
+    if(this.classList.contains('disabled') || !this.getAttribute('href')){ e.preventDefault(); }
+  });
+
+  // 페이지 로드 시 이벤트 기간에 따라 화면 결정
+  applyGate();
+</script>
+
+</body>
+</html>
