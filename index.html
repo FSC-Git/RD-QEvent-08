@@ -556,10 +556,10 @@
 
 <script>
   // ===== 이벤트 운영 기간 (KST 한국시간 고정) =====
-  // 마감: 7/25(토) 오전 11:00. START는 과거로 둬서 '오픈 전' 안내 없이 즉시 열림.
-  // ⚠️ 오픈일은 아직 임시(과거). 실제 오픈 시각 확정되면 EVENT_START 교체 필요.
-  const EVENT_START = new Date('2026-06-25T00:00:00+09:00');
-  const EVENT_END   = new Date('2026-07-25T11:00:00+09:00');
+  // 오픈: 7/24(금) 오전 11:00  →  마감: 7/24 24:00 (= 7/25 00:00)
+  // 오픈 전에는 '예정/SOON' 화면 + 오픈까지 카운트다운이 표시됩니다.
+  const EVENT_START = new Date('2026-07-24T11:00:00+09:00');
+  const EVENT_END   = new Date('2026-07-25T00:00:00+09:00');
 
   // ===== 1회용 코드 백엔드 (Google Apps Script 웹앱) =====
   const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycby6k_lLX0JHgi7C8cgTNgWVVGSxqE2uVG7cHnEA_94rYF-tsmkSg5QEDuH_VTMtdVBvWQ/exec';
